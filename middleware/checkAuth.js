@@ -25,10 +25,10 @@ module.exports = (req, res, next) => {
     }
 }
 async function verify(token) {
-    const client = new OAuth2Client('5126203523-es54glrb2p1rd68vehtc371hf17jcvt9.apps.googleusercontent.com');
+    const client = new OAuth2Client('5126203523-o4445m07k6m6kjj9313p8flpd2meqmpd.apps.googleusercontent.com');
     const ticket = await client.verifyIdToken({
         idToken: token,
-        audience: '5126203523-es54glrb2p1rd68vehtc371hf17jcvt9.apps.googleusercontent.com',  // Specify the CLIENT_ID of the app that accesses the backend
+        audience: '55126203523-o4445m07k6m6kjj9313p8flpd2meqmpd.apps.googleusercontent.com',  // Specify the CLIENT_ID of the app that accesses the backend
         // Or, if multiple clients access the backend:
         //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
     });
