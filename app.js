@@ -16,13 +16,6 @@ const loginRoutes = require('./Routes/login');
 
 const app = express();
 
-require('./Db');
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({'extended':'false'}));
-app.use("/Images/ProfileImage", express.static(path.join("Images/ProfileImage")));
-app.use("/CV", express.static(path.join("CV")));
-
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -36,6 +29,13 @@ app.use((req, res, next) => {
   );
   next();
 });
+
+require('./Db');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({'extended':'false'}));
+app.use("/Images/ProfileImage", express.static(path.join("Images/ProfileImage")));
+app.use("/CV", express.static(path.join("CV")));
 
 app.use('/api/user',userRoutes);
 app.use('/api/profile',profileRoutes);
