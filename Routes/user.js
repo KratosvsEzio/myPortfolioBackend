@@ -131,14 +131,16 @@ routes.get("", (req, res, next) => {
 
   User.find()
   .then( (results) => {
-    res.status(200).json({
-      message: "user data fetched successfully!",
-      data: results[0]
-    });
+    setTimeout( () => {
+      res.status(200).json({
+        message: "user data fetched successfully!",
+        data: results[0]
+      });
+    },100);
   })
   .catch( err => {
-    console.log(err.message)
-  })
+    console.log(err.message);
+  });
 
 });
 

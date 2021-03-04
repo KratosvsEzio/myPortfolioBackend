@@ -1,6 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const dotenv = require('dotenv');
+dotenv.config();
 
-mongoose.connect('mongodb://AashirAzeem:xi2v4pjJ34IkdNrt@cluster0-shard-00-00-unchd.mongodb.net:27017,cluster0-shard-00-01-unchd.mongodb.net:27017,cluster0-shard-00-02-unchd.mongodb.net:27017/User?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', 
+
+mongoose.connect(`mongodb://${process.env.DATABASE_USER_NAME}:${process.env.DATABASE_USER_PASSWORD}${process.env.DATABASE_URI}`,
 {
     useNewUrlParser: true,
     useUnifiedTopology: true,

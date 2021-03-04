@@ -4,6 +4,7 @@ const path = require("path");
 
 // Routes
 const userRoutes = require('./Routes/user');
+const profileCVRoutes = require('./Routes/CV');
 const skillRoutes = require('./Routes/skill');
 const profileRoutes = require('./Routes/profile');
 const profileImageRoutes = require('./Routes/profileImage');
@@ -20,6 +21,7 @@ require('./Db');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use("/Images/ProfileImage", express.static(path.join("Images/ProfileImage")));
+app.use("/CV", express.static(path.join("CV")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -37,6 +39,7 @@ app.use((req, res, next) => {
 app.use('/api/user',userRoutes);
 app.use('/api/profile',profileRoutes);
 app.use('/api/profileImage',profileImageRoutes);
+app.use('/api/CV',profileCVRoutes);
 app.use('/api/about',aboutRoutes);
 app.use('/api/skill',skillRoutes);
 app.use('/api/education',educationRoutes);

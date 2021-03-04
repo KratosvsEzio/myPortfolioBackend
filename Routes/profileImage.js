@@ -1,5 +1,5 @@
 const express = require('express');
-// const checkAuth = require('../middleware/check-auth');
+const checkAuth = require('../middleware/checkAuth');
 const multer = require('multer');
 const routes = express.Router();
 
@@ -28,12 +28,12 @@ const storage = multer.diskStorage({
     let name = file.originalname.toLowerCase().split('.');
     name = name[0].split(' ').join('')
     const ext = MIMETypes[file.mimetype];
-    callback(null, name + '-' + Date.now() + '.' + ext)
+    callback(null, 'Aashir_Azeem_Profile_Image.' + ext)
   }
 }); 
 
 // Update Profile Image Route
-routes.post("", multer({storage: storage}).single("image"), (req, res, next) => {
+routes.post("", checkAuth, multer({storage: storage}).single("image"), (req, res, next) => {
   console.log('hello',req.file);
   User.find()
   .then( (user) => {

@@ -1,5 +1,5 @@
 const express = require('express');
-// const checkAuth = require('../middleware/check-auth');
+const checkAuth = require('../middleware/checkAuth');
 const mongoose = require('mongoose');
 const routes = express.Router();
 
@@ -7,7 +7,7 @@ const routes = express.Router();
 let User = require('../Models/user.model');
 
 // Create Skill Route
-routes.post("", (req, res, next) => {
+routes.post("", checkAuth, (req, res, next) => {
     User.find()
     .then( (user) => {
         user[0].skills.push({ _id: mongoose.Types.ObjectId(), skill: req.body.skill })
@@ -29,7 +29,7 @@ routes.post("", (req, res, next) => {
 });
 
 // Update Skill Route
-routes.put("/:id", (req, res, next) => {
+routes.put("/:id", checkAuth, (req, res, next) => {
     User.updateOne({'skills._id': mongoose.Types.ObjectId(req.params.id)}, {"skills.$.skill": req.body.skill} )
     .then( (results) => {
         res.status(200).json({
@@ -43,7 +43,7 @@ routes.put("/:id", (req, res, next) => {
 });
 
 // Delete Skill Route
-routes.delete("/:id", (req, res, next) => {
+routes.delete("/:id", checkAuth, (req, res, next) => {
     User.find()
     .then( (user) => {
         newSkills = user[0].skills.filter( (skill) => {

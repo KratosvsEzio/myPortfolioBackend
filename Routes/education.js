@@ -1,5 +1,5 @@
 const express = require('express');
-// const checkAuth = require('../middleware/check-auth');
+const checkAuth = require('../middleware/checkAuth');
 const mongoose = require('mongoose');
 const routes = express.Router();
 
@@ -7,7 +7,7 @@ const routes = express.Router();
 let User = require('../Models/user.model');
 
 // Create Education Route
-routes.post("", (req, res, next) => {
+routes.post("", checkAuth, (req, res, next) => {
     User.find()
     .then( (user) => {
         user[0].education.push({ 
@@ -33,7 +33,7 @@ routes.post("", (req, res, next) => {
 });
 
 // Update Education Route
-routes.put("/:id", (req, res, next) => {
+routes.put("/:id", checkAuth, (req, res, next) => {
     User.updateOne({'education._id': mongoose.Types.ObjectId(req.params.id)}, {
         "education.$.date": req.body.date,
         "education.$.degree": req.body.degree,
@@ -51,7 +51,7 @@ routes.put("/:id", (req, res, next) => {
 });
 
 // Delete Education Route
-routes.delete("/:id", (req, res, next) => {
+routes.delete("/:id", checkAuth, (req, res, next) => {
     User.find()
     .then( (user) => {
         newEducation = user[0].education.filter( (education) => {

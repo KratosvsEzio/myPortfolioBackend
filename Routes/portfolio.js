@@ -1,5 +1,5 @@
 const express = require('express');
-// const checkAuth = require('../middleware/check-auth');
+const checkAuth = require('../middleware/checkAuth');
 const mongoose = require('mongoose');
 const routes = express.Router();
 
@@ -7,17 +7,28 @@ const routes = express.Router();
 let User = require('../Models/user.model');
 
 // Create Portfolio Route
-routes.post("", (req, res, next) => {
+routes.post("", checkAuth, (req, res, next) => {
+    const project = req.body;
+    console.log(req.body);
     User.find()
     .then( (user) => {
         user[0].portfolio.push({ 
             _id: mongoose.Types.ObjectId(),
-            img: req.body.img,
-            name: req.body.name,
-            category: req.body.category,
-            demoURL: req.body.demoURL,
-            gitURL: req.body.gitURL
-        })
+            img: project.img,
+            name: project.name,
+            category: project.category,
+            demoURL: project.demoURL,
+            gitURL: project.gitURL,
+            description: {
+                frontend: getArrayWithMongooseIds(project.description.frontend),
+                backend: getArrayWithMongooseIds(project.description.backend),
+                framework: getArrayWithMongooseIds(project.description.framework),
+                database: getArrayWithMongooseIds(project.description.database),
+                library: getArrayWithMongooseIds(project.description.library),
+                font: getArrayWithMongooseIds(project.description.font),
+                icon: getArrayWithMongooseIds(project.description.icon),
+            }
+        });
         user[0].save()
         .then( () => {
             res.status(200).json({
@@ -34,15 +45,37 @@ routes.post("", (req, res, next) => {
     });
 });
 
+function getArrayWithMongooseIds(array) {
+    return array.map( item => {
+        return {
+            _id: mongoose.Types.ObjectId(),
+            name: item.name,
+            url: item.url,
+            icon: item.icon
+        }
+    });
+}
+
 // Update Portfolio Route
-routes.put("/:id", (req, res, next) => {
+routes.put("/:id", checkAuth, (req, res, next) => {
+    const project = req.body;
+    console.log('body', project)
     User.updateOne({'portfolio._id': mongoose.Types.ObjectId(req.params.id)}, {
-        "portfolio.$.img": req.body.img,
-        "portfolio.$.name": req.body.name,
-        "portfolio.$.category": req.body.category,
-        "portfolio.$.demoURL": req.body.demoURL,
-        "portfolio.$.gitURL": req.body.gitURL,
-    } )
+        "portfolio.$.img": project.img,
+        "portfolio.$.name": project.name,
+        "portfolio.$.category": project.category,
+        "portfolio.$.demoURL": project.demoURL,
+        "portfolio.$.gitURL": project.gitURL,
+        "portfolio.$.description": {
+            "frontend": project.description.frontend,
+            "backend": project.description.backend,
+            "framework": project.description.framework,
+            "library": project.description.library,
+            "database": project.description.database,
+            "font": project.description.font,
+            "icon": project.description.icon,
+        }
+    })
     .then( (results) => {
         res.status(200).json({
             message: "Portfolio updated successfully!",
@@ -55,7 +88,7 @@ routes.put("/:id", (req, res, next) => {
 });
 
 // Delete Portfolio Route
-routes.delete("/:id", (req, res, next) => {
+routes.delete("/:id", checkAuth, (req, res, next) => {
     User.find()
     .then( (user) => {
         newPortfolio = user[0].portfolio.filter( (portfolio) => {

@@ -28,6 +28,15 @@ const userSchema = new Schema({
         category: {type : String },
         demoURL: {type : String },
         gitURL: {type : String },
+        description: {
+            frontend: [ {name: { type: String }, url: { type: String}, icon: { type: String} }],
+            backend: [ {name: { type: String }, url: { type: String}, icon: { type: String}  }],
+            framework: [ {name: { type: String }, url: { type: String}, icon: { type: String}  }],
+            library: [ {name: { type: String }, url: { type: String}, icon: { type: String}  }],
+            database: [ {name: { type: String }, url: { type: String}, icon: { type: String}  }],
+            font: [ {name: { type: String }, url: { type: String}, icon: { type: String}  }],
+            icon: [ {name: { type: String }, url: { type: String}, icon: { type: String}  }],
+        }
     }],
     skills: [{
         skill: {type : String },
