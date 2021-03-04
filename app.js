@@ -14,7 +14,11 @@ const portfolioRoutes = require('./Routes/portfolio');
 const sendEmailRoutes = require('./Routes/sendEmail');
 const loginRoutes = require('./Routes/login');
 
+require('./Db');
 const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({'extended':'false'}));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -30,10 +34,6 @@ app.use((req, res, next) => {
   next();
 });
 
-require('./Db');
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use("/Images/ProfileImage", express.static(path.join("Images/ProfileImage")));
 app.use("/CV", express.static(path.join("CV")));
 
