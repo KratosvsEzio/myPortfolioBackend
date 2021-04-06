@@ -26,6 +26,7 @@ const userSchema = new Schema({
         date: {type : String },
         designation: {type : String },
         institution: {type : String },
+        description: {type : String },
     }],
     portfolio: [{
         img: {type : String },

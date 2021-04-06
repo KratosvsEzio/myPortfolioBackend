@@ -14,7 +14,8 @@ routes.post("", checkAuth, (req, res, next) => {
             _id: mongoose.Types.ObjectId(),
             date: req.body.date,
             designation: req.body.designation,
-            institution: req.body.institution
+            institution: req.body.institution,
+            description: req.body.description
         })
         user[0].save()
         .then( () => {
@@ -38,6 +39,7 @@ routes.put("/:id", checkAuth, (req, res, next) => {
         "experience.$.date": req.body.date,
         "experience.$.designation": req.body.designation,
         "experience.$.institution": req.body.institution,
+        "experience.$.description": req.body.description,
     } )
     .then( (results) => {
         res.status(200).json({
