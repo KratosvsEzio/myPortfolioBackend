@@ -22,6 +22,11 @@ const userSchema = new Schema({
         degree: {type : String },
         institution: {type : String },
     }],
+    education: [{
+        date: {type : String },
+        designation: {type : String },
+        institution: {type : String },
+    }],
     portfolio: [{
         img: {type : String },
         name: {type : String },
